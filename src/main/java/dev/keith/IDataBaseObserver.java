@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.function.Function;
 
-public interface IDataBaseHandler<V, D extends IData<V>, S extends IDataBaseHandler.Serializer<D>> {
+public interface IDataBaseObserver<V, D extends IData<V>, S extends IDataBaseObserver.Serializer<D>> {
     S getSerializer();
     Function<V, D> getFactory();
     interface Serializer<D extends IData<?>> {
