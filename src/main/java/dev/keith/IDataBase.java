@@ -1,13 +1,13 @@
 package dev.keith;
 
-import java.util.Map;
+import java.util.List;
 
 public interface IDataBase<K, V, D extends IData<V>> {
     D read(K key);
-    ResultType write(K key, D data);
-    default ResultType write(Map<K, D> data) {
-        for (Map.Entry<K, D> entry : data.entrySet()) {
-            if (!write(entry.getKey(), entry.getValue()).canContinue) {
+    ResultType write(Pair<K, V> pair);
+    default ResultType write(List<Pair<K, V>> data) {
+        for (Pair<K, V> pair : data) {
+            if (!write(pair).canContinue) {
                 return ResultType.EXCEPTION;
             }
         }
