@@ -6,11 +6,11 @@ package dev.keith;
  */
 @SuppressWarnings("unused")
 public final class DataBaseHelper {
-    private final IDataBase<?, ?> defaultDB;
+    private final IDataBase<?, ?, ?> defaultDB;
     private final IDataBaseObserver<?, ?, ?> defaultObserver;
     private static boolean isInitialed;
     private static DataBaseHelper instance;
-    public DataBaseHelper(IDataBase<?, ?> defaultDB, IDataBaseObserver<?, ?, ?> defaultObserver) {
+    public DataBaseHelper(IDataBase<?, ?, ?> defaultDB, IDataBaseObserver<?, ?, ?> defaultObserver) {
         this.defaultDB = defaultDB;
         this.defaultObserver = defaultObserver;
         if (isInitialed) {
@@ -25,7 +25,7 @@ public final class DataBaseHelper {
         }
         return null;
     }
-    public IDataBase<?, ?> getDefaultDataBase() {
+    public IDataBase<?, ?, ?> getDefaultDataBase() {
         return defaultDB;
     }
     public IDataBaseObserver<?, ?, ?> getDefaultObserver() {
