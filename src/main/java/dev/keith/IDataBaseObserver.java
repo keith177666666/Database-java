@@ -2,22 +2,21 @@ package dev.keith;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
-public interface IDataBaseObserver<V, D extends IData<V>, S extends IDataBaseObserver.Serializer<D>> {
+public interface IDataBaseObserver<K, V, D extends IData<V>, S extends IDataBaseObserver.Serializer<K, D>> {
     S getSerializer();
     Function<V, D> getFactory();
-    interface Serializer<D extends IData<?>> {
-        D deserialize(BufferedReader dataInput);
-        ResultType serialize(D data, BufferedWriter dataOutput);
-        default ResultType serialize(List<D> data, BufferedWriter dataOutput) {
-            for(D data1 : data) {
-                if(!(serialize(data1, dataOutput).canContinue)) {
+    interface Serializer<K, D extends IData<?>> {
+        D deserialize(K key, BufferedReader dataInput);
+        ResultType serialize(K key, D data, BufferedWriter dataOutput);
+        default ResultType serialize(Map<K, D> data, BufferedWriter dataOutput) {
+            for (Map.Entry<K, D> entry : data.entrySet()) {
+                if (!serialize(entry.getKey(), entry.getValue(), dataOutput).canContinue) {
                     return ResultType.EXCEPTION;
                 }
             }
-            data.forEach(d -> this.serialize(d, dataOutput));
             return ResultType.SUCCESS;
         }
     }
