@@ -1,5 +1,7 @@
 package dev.keith;
 
+import dev.keith.event.Proxy;
+
 import java.util.List;
 
 public interface IDataBase<K, V, D extends IData<V>> {
@@ -13,4 +15,5 @@ public interface IDataBase<K, V, D extends IData<V>> {
         }
         return ResultType.SUCCESS;
     }
+    void addProxy(Proxy proxy);
 }
