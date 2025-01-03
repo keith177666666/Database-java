@@ -11,6 +11,7 @@ public interface IDataBaseObserver<K, V, D extends IData<V>, S extends IDataBase
     interface Serializer<K, D extends IData<?>> {
         D deserialize(K key, BufferedReader dataInput);
         ResultType serialize(Pair<K, D> pair, BufferedWriter dataOutput);
+        ResultType remove(K key, BufferedReader dataInput, BufferedWriter dataOutput);
         default ResultType serialize(List<Pair<K, D>> data, BufferedWriter dataOutput) {
             for (Pair<K, D> pair : data) {
                 if (!serialize(pair, dataOutput).canContinue) {
