@@ -3,34 +3,29 @@ package dev.keith.event;
 import dev.keith.IData;
 import dev.keith.IDataBase;
 
-import java.util.function.Consumer;
+import java.util.function.Function;
 
-public final class DataBaseManger {
-    private static boolean isInitialed = false;
-    private static DataBaseManger instance;
-    public DataBaseManger() {
-        if (!isInitialed) {
-            isInitialed = true;
-            instance = this;
-        } else {
-            throw new IllegalStateException("The Data Base Manger has been initialed!");
-        }
+public final class DataBaseManger<K, V, D extends IData<V>, DB extends IDataBase<K, V, D>> {
+
+    private final DB db;
+
+    public DataBaseManger(DB db) {
+        this.db = db;
     }
-    public <K, V, D extends IData<V>> void addProxyTo(IDataBase<K, V, D> dataBase,
-                                                      Consumer<Event> consumer) {
-        dataBase.addProxy(new ProxyImpl(consumer));
+    public void addProxyTo(Function<IEvent<?>, Permission> consumer) {
+        db.addProxy(new ProxyImpl(consumer));
     }
 
     static final class ProxyImpl implements Proxy {
-        private final Consumer<Event> consumer;
+        private final Function<IEvent<?>, Permission> consumer;
 
-        public ProxyImpl(Consumer<Event> consumer) {
+        public ProxyImpl(Function<IEvent<?>, Permission> consumer) {
             this.consumer = consumer;
         }
 
         @Override
-        public void callOnMethod(Event event) {
-            consumer.accept(event);
+        public Permission callOnMethod(IEvent<?> event) {
+            return consumer.apply(event);
         }
     }
 }

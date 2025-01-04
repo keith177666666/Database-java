@@ -1,8 +1,6 @@
 package dev.keith;
 
 
-import dev.keith.event.DataBaseManger;
-
 /**
  * Please use Class.forName(YOUR_DEFAULT_DATABASE_CLASS) and initial this helper.
  */
@@ -10,7 +8,6 @@ import dev.keith.event.DataBaseManger;
 public final class DataBaseHelper {
     private final IDataBase<?, ?, ?> defaultDB;
     private final IDataBaseObserver<?, ?, ?, ?> defaultObserver;
-    private final DataBaseManger manger;
     private static boolean isInitialed;
     private static DataBaseHelper instance;
     public DataBaseHelper(IDataBase<?, ?, ?> defaultDB, IDataBaseObserver<?, ?, ?, ?> defaultObserver) {
@@ -21,7 +18,6 @@ public final class DataBaseHelper {
         }
         isInitialed = true;
         instance = this;
-        this.manger = new DataBaseManger();
     }
     public static DataBaseHelper getInstance() {
         if(isInitialed) {
@@ -34,8 +30,5 @@ public final class DataBaseHelper {
     }
     public IDataBaseObserver<?, ?, ?, ?> getDefaultObserver() {
         return defaultObserver;
-    }
-    public DataBaseManger getDataBaseManger() {
-        return manger;
     }
 }
