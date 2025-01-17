@@ -1,5 +1,5 @@
 package dev.keith;
 
-public interface IDataBaseProvider {
-    Class<IDataBase<?, ?, ?>> provide();
+public interface IDataBaseProvider<DB extends IDataBase<?, ?, ?>> {
+    Class<? extends DB> provide();
 }
