@@ -14,7 +14,6 @@ public class DataBaseLoader {
                 .getFirst()
                 .get()
                 .provide()
-                .getClass()
                 .getName();
     }
     public static String dataBaseClass;
