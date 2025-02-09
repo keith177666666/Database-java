@@ -7,7 +7,9 @@ public class DataBaseCore {
         try {
             Class.forName("dev.keith.internal.DataBaseLoader");
             Class.forName("dev.keith.DataBaseHelper");
-            Class.forName(DataBaseLoader.dataBaseClass);
+            try {
+                Class.forName(DataBaseLoader.dataBaseClass);
+            } catch (ClassNotFoundException ignored) {}
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
